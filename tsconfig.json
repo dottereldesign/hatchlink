@@ -4,10 +4,13 @@
     "strict": true,
     "jsx": "react-native",
     "skipLibCheck": true,
+    "baseUrl": ".", // Added baseUrl for path resolution
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"], // Keep existing alias
+      "@/utils/*": ["./src/utils/*"], // Add specific alias for utils
+      "@/hooks/*": ["./hooks/*"] // Add specific alias for hooks
     }
   },
-  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts"],
+  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"],
   "exclude": ["node_modules"]
 }
