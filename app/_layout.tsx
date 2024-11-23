@@ -60,16 +60,14 @@ export default function RootLayout() {
 
   // Redirect to onboarding if needed
   useEffect(() => {
-    console.group("Onboarding Redirect Logic Debugging");
+    console.group("Onboarding Redirect Logic");
     console.log("Current onboarding state:", hasOnboarded);
     if (hasOnboarded === false) {
       console.log("User has not onboarded. Redirecting to /onboarding...");
       router.replace("/onboarding");
-    } else if (hasOnboarded === true) {
-      console.log("User has already onboarded. Proceeding to the main app.");
     }
     console.groupEnd();
-  }, [hasOnboarded]);
+  }, [hasOnboarded, router]);
 
   // Show loading screen while fonts or onboarding state are unresolved
   if (!fontsLoaded || hasOnboarded === null) {

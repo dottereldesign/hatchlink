@@ -2,8 +2,11 @@ import React from "react";
 import { Text, StyleSheet, TextStyle } from "react-native";
 
 type IconSymbolProps = {
-  style?: TextStyle; // Use TextStyle for styles that apply to Text components
-  name: string; // Example prop, adjust as needed
+  name: string;
+  size?: number; // Add this if missing
+  weight: string;
+  color: string;
+  style?: TextStyle; // If style is being passed
 };
 
 export default function IconSymbol({ style, name }: IconSymbolProps) {
