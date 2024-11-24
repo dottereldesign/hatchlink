@@ -1,18 +1,19 @@
 {
-  "extends": "./node_modules/expo/tsconfig.base",
+  "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
-    "jsx": "react-native", // Keep this for React Native JSX transformations
+    "jsx": "react-native",
     "skipLibCheck": true,
-    "typeRoots": ["./node_modules/@types"],
-    "types": ["jest", "react", "react-native", "react-navigation"],
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "baseUrl": ".", // Keep base URL for path resolution
+    "resolveJsonModule": true,
+    "typeRoots": ["./node_modules/@types"],
+    "types": ["jest", "react", "react-native"],
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"], // Alias for entire project
-      "@/utils/*": ["./src/utils/*"], // Specific alias for utilities
-      "@/hooks/*": ["./hooks/*"] // Specific alias for hooks
+      "@/*": ["./*"],
+      "@/utils/*": ["./src/utils/*"],
+      "@/hooks/*": ["./hooks/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"],

@@ -1,75 +1,67 @@
-// app/onboarding.tsx
-import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import { useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
+import {
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
+} from "@react-navigation/native";
+import { Stack } from "expo-router";
+import { View, ActivityIndicator } from "react-native";
+import { useFonts } from "expo-font";
+import { useColorScheme } from "@/hooks/useColorScheme";
 import { debugAsyncStorage } from "@/utils/asyncStorageUtil";
 
-export default function Onboarding() {
-  const router = useRouter();
+export default function RootLayout() {
+  const colorScheme = useColorScheme();
 
-  const handleNext = async () => {
-    try {
-      console.group("Onboarding Debugging");
-      console.log("Saving onboarding status...");
-      await debugAsyncStorage.setItem("hasOnboarded", "true");
-      console.log("Onboarding status saved. Redirecting to index...");
-      router.replace("/");
-      console.groupEnd();
-    } catch (error) {
-      console.error("Error saving onboarding status:", error);
+  const [fontsLoaded] = useFonts({
+    PoppinsRegular: require("../assets/fonts/Poppins-Regular.ttf"),
+    PoppinsBold: require("../assets/fonts/Poppins-Bold.ttf"),
+    PoppinsMedium: require("../assets/fonts/Poppins-Medium.ttf"),
+  });
+
+  const [hasOnboarded, setHasOnboarded] = useState<boolean | null>(null);
+  const [ready, setReady] = useState(false);
+
+  // Fetch onboarding state from AsyncStorage
+  useEffect(() => {
+    const checkOnboardingStatus = async () => {
+      try {
+        const onboarded = await debugAsyncStorage.getItem("hasOnboarded");
+        setHasOnboarded(onboarded === "true");
+      } catch (error) {
+        console.error("Error accessing AsyncStorage:", error);
+        setHasOnboarded(false); // Fallback to false on error
+      }
+    };
+
+    checkOnboardingStatus();
+  }, []);
+
+  // Ensure all conditions are resolved before setting `ready` state
+  useEffect(() => {
+    if (fontsLoaded && hasOnboarded !== null) {
+      setReady(true);
     }
-  };
+  }, [fontsLoaded, hasOnboarded]);
 
-  console.log("Rendering Onboarding screen...");
+  // Show loading screen until app is ready
+  if (!ready) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color="#000" />
+      </View>
+    );
+  }
 
   return (
-    <View style={styles.container}>
-      <Image
-        source={require("../assets/images/hatchlink-logo.png")}
-        style={styles.logo}
-      />
-      <Text style={styles.title}>Welcome to HatchLink</Text>
-      <Text style={styles.description}>
-        Discover a world of local communities. From schools to sports clubs,
-        HatchLink keeps you informed and connected.
-      </Text>
-      <TouchableOpacity style={styles.button} onPress={handleNext}>
-        <Text style={styles.buttonText}>Get Started</Text>
-      </TouchableOpacity>
-    </View>
+    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+      <Stack>
+        {/* Define screens */}
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="onboarding" options={{ headerShown: false }} />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="+not-found" />
+      </Stack>
+    </ThemeProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 16,
-    backgroundColor: "#fff",
-  },
-  logo: {
-    width: 100,
-    height: 100,
-    marginBottom: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 16,
-  },
-  description: {
-    fontSize: 16,
-    textAlign: "center",
-    marginBottom: 32,
-  },
-  button: {
-    backgroundColor: "#000",
-    padding: 12,
-    borderRadius: 8,
-  },
-  buttonText: {
-    color: "#fff",
-    fontWeight: "bold",
-  },
-});

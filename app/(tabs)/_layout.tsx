@@ -1,13 +1,12 @@
-// app/(tabs)/_layout.tsx
 import { Tabs } from "expo-router";
 
 export default function TabsLayout() {
   return (
     <Tabs>
-      <Tabs.Screen name="home" />
-      <Tabs.Screen name="feed" />
-      <Tabs.Screen name="notices" />
-      <Tabs.Screen name="switch" />
+      <Tabs.Screen name="home" options={{ title: "Home" }} />
+      <Tabs.Screen name="feed" options={{ title: "Feed" }} />
+      <Tabs.Screen name="notices" options={{ title: "Notices" }} />
+      <Tabs.Screen name="switch" options={{ title: "Switch" }} />
     </Tabs>
   );
 }
