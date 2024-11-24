@@ -3,6 +3,8 @@ import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 
 export default function Index() {
+  console.log("[Index] Rendering Index Screen");
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Welcome to HatchLink</Text>

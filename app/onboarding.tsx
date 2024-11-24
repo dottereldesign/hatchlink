@@ -1,67 +1,50 @@
-import React, { useEffect, useState } from "react";
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
-import { Stack } from "expo-router";
-import { View, ActivityIndicator } from "react-native";
-import { useFonts } from "expo-font";
-import { useColorScheme } from "@/hooks/useColorScheme";
+// app/onboarding.tsx
+import React from "react";
+import { View, Text, Button, StyleSheet } from "react-native";
+import { useRouter } from "expo-router";
 import { debugAsyncStorage } from "@/utils/asyncStorageUtil";
 
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
+export default function Onboarding() {
+  const router = useRouter();
 
-  const [fontsLoaded] = useFonts({
-    PoppinsRegular: require("../assets/fonts/Poppins-Regular.ttf"),
-    PoppinsBold: require("../assets/fonts/Poppins-Bold.ttf"),
-    PoppinsMedium: require("../assets/fonts/Poppins-Medium.ttf"),
-  });
-
-  const [hasOnboarded, setHasOnboarded] = useState<boolean | null>(null);
-  const [ready, setReady] = useState(false);
-
-  // Fetch onboarding state from AsyncStorage
-  useEffect(() => {
-    const checkOnboardingStatus = async () => {
-      try {
-        const onboarded = await debugAsyncStorage.getItem("hasOnboarded");
-        setHasOnboarded(onboarded === "true");
-      } catch (error) {
-        console.error("Error accessing AsyncStorage:", error);
-        setHasOnboarded(false); // Fallback to false on error
-      }
-    };
-
-    checkOnboardingStatus();
-  }, []);
-
-  // Ensure all conditions are resolved before setting `ready` state
-  useEffect(() => {
-    if (fontsLoaded && hasOnboarded !== null) {
-      setReady(true);
+  const completeOnboarding = async () => {
+    try {
+      console.log(
+        "[Onboarding] Setting 'hasOnboarded' to true in AsyncStorage"
+      );
+      await debugAsyncStorage.setItem("hasOnboarded", "true");
+      console.log("[Onboarding] Successfully updated AsyncStorage");
+      console.log("[Onboarding] Navigating to '/'");
+      router.replace("/");
+    } catch (error) {
+      console.error("[Onboarding] Error during onboarding completion:", error);
     }
-  }, [fontsLoaded, hasOnboarded]);
-
-  // Show loading screen until app is ready
-  if (!ready) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" color="#000" />
-      </View>
-    );
-  }
+  };
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        {/* Define screens */}
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="onboarding" options={{ headerShown: false }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-    </ThemeProvider>
+    <View style={styles.container}>
+      <Text style={styles.text}>Welcome to Onboarding</Text>
+      <Button
+        title="Complete Onboarding"
+        onPress={() => {
+          console.log("[Onboarding] Complete Onboarding button pressed");
+          completeOnboarding();
+        }}
+      />
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff",
+  },
+  text: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+});
