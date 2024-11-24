@@ -1,9 +1,11 @@
+// app/_layout.tsx
 import React, { useEffect, useState } from "react";
 import {
   DarkTheme,
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
+
 import { Stack, useRouter } from "expo-router";
 import { useFonts } from "expo-font";
 import { View, ActivityIndicator } from "react-native";
@@ -41,6 +43,7 @@ export default function RootLayout() {
         console.groupEnd();
       } catch (error) {
         console.error("Error accessing AsyncStorage:", error);
+        setHasOnboarded(false); // Fallback to `false` on error
       }
     };
     checkOnboardingStatus();
