@@ -69,9 +69,9 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: 24,
-    fontWeight: "bold",
     marginBottom: 24,
     alignSelf: "center",
+    fontFamily: "PoppinsSemiBold",
   },
   notificationContainer: {
     width: "100%",

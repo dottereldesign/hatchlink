@@ -19,9 +19,11 @@ export default function RootLayout() {
 
   // State for fonts and onboarding status
   const [fontsLoaded] = useFonts({
-    PoppinsRegular: require("../assets/fonts/Poppins-Regular.ttf"),
-    PoppinsBold: require("../assets/fonts/Poppins-Bold.ttf"),
-    PoppinsMedium: require("../assets/fonts/Poppins-Medium.ttf"),
+    PoppinsRegular: require("../assets/fonts/Poppins-Regular.ttf"), // Weight 400
+    PoppinsMedium: require("../assets/fonts/Poppins-Medium.ttf"), // Weight 500
+    PoppinsSemiBold: require("../assets/fonts/Poppins-SemiBold.ttf"), // Weight 600
+    PoppinsBold: require("../assets/fonts/Poppins-Bold.ttf"), // Weight 700
+    PoppinsExtraBold: require("../assets/fonts/Poppins-ExtraBold.ttf"), // Weight 800
   });
 
   const hasOnboarded = useOnboardingStatus();

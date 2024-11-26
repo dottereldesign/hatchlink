@@ -44,13 +44,13 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     width: "100%",
-    maxWidth: 360,
+    maxWidth: 398,
   },
   heading: {
     fontSize: 24,
-    fontWeight: "bold",
     marginBottom: 24,
     alignSelf: "center",
+    fontFamily: "PoppinsSemiBold",
   },
   dropdownContainer: {
     height: 54,
