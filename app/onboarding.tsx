@@ -37,24 +37,21 @@ export default function Onboarding() {
       case 3:
         return (
           <SubscribeSetup
-            selectedSubscription={selectedLanguage} // Repurposing language as subscription for now
-            onSelectSubscription={setSelectedLanguage}
+            selectedOption={selectedLanguage} // Updated to match SubscribeSetup props
+            onOptionChange={setSelectedLanguage} // Updated to match SubscribeSetup props
           />
         );
-      case 4:
-        return <Text style={styles.stepHeading}>Final Step: Confirm</Text>;
       default:
         return null;
     }
   };
 
   const getPrimaryButtonText = () => {
-    if (currentStep < 4) return "Next";
-    return "Finish";
+    return currentStep < 3 ? "Next" : "Subscribe";
   };
 
   const handlePrimaryButtonPress = () => {
-    if (currentStep < 4) {
+    if (currentStep < 3) {
       goToNextStep();
     } else {
       completeOnboarding();

@@ -28,12 +28,12 @@ export const useOnboardingState = () => {
 
   const goToNextStep = () => {
     console.log("[useOnboardingState] Moving to next step");
-    setCurrentStep((prev) => prev + 1);
+    setCurrentStep((prev) => Math.min(prev + 1, 3)); // Limit to step 3
   };
 
   const goToPreviousStep = () => {
     console.log("[useOnboardingState] Moving to previous step");
-    setCurrentStep((prev) => Math.max(1, prev - 1));
+    setCurrentStep((prev) => Math.max(1, prev - 1)); // Prevent going below step 1
   };
 
   const completeOnboarding = async () => {
@@ -41,6 +41,7 @@ export const useOnboardingState = () => {
     try {
       await debugAsyncStorage.setItem("hasOnboarded", "true");
       router.replace("/");
+      console.log("[useOnboardingState] Onboarding completed and redirected");
     } catch (error) {
       console.error("[useOnboardingState] Error completing onboarding:", error);
     }

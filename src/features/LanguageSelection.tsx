@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: 24,
-    marginBottom: 24,
+    marginBottom: 16,
     alignSelf: "center",
     fontFamily: "PoppinsSemiBold",
   },
