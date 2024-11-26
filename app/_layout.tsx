@@ -40,7 +40,7 @@ export default function RootLayout() {
       router.replace("/onboarding");
     } else {
       console.log(`[${timestamp()}] [RootLayout] Navigating to '/'`);
-      router.replace("/");
+      router.replace("/(tabs)/home");
     }
   }, [fontsLoaded, hasOnboarded]);
 
@@ -54,9 +54,10 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={colorScheme === "light" ? DarkTheme : DefaultTheme}>
       <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false }} />
+        {/* Make (tabs) the default route */}
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="onboarding" options={{ headerShown: false }} />
       </Stack>
     </ThemeProvider>

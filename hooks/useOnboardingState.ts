@@ -40,7 +40,8 @@ export const useOnboardingState = () => {
     console.log("[useOnboardingState] Completing onboarding");
     try {
       await debugAsyncStorage.setItem("hasOnboarded", "true");
-      router.replace("/");
+      router.replace("/(tabs)/home");
+
       console.log("[useOnboardingState] Onboarding completed and redirected");
     } catch (error) {
       console.error("[useOnboardingState] Error completing onboarding:", error);

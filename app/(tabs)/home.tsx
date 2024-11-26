@@ -1,24 +1,58 @@
-import { Tabs } from "expo-router";
 import React from "react";
-import { Ionicons } from "@expo/vector-icons";
+import { View, Text, StyleSheet, Image, Button, Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function TabLayout() {
+export default function Home() {
+  console.log("[Home] Rendering Home Screen");
+
+  const clearAsyncStorage = async () => {
+    try {
+      console.log("[Home] Clearing AsyncStorage...");
+      await AsyncStorage.clear();
+      console.log("[Home] AsyncStorage cleared successfully!");
+      Alert.alert("Success", "AsyncStorage has been cleared!");
+    } catch (error) {
+      console.error("[Home] Failed to clear AsyncStorage:", error);
+      Alert.alert(
+        "Error",
+        "Failed to clear AsyncStorage. Check logs for details."
+      );
+    }
+  };
+
   return (
-    <Tabs
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ color, size }) => {
-          // Initialize iconName with a default value
-          let iconName: keyof typeof Ionicons.glyphMap = "help-outline";
-
-          if (route.name === "home") iconName = "home-outline";
-          else if (route.name === "feed") iconName = "list-outline";
-          else if (route.name === "notices") iconName = "notifications-outline";
-          else if (route.name === "switch")
-            iconName = "swap-horizontal-outline";
-
-          return <Ionicons name={iconName} size={size} color={color} />;
-        },
-      })}
-    />
+    <View style={styles.container}>
+      <Text style={styles.text}>Home</Text>
+      <Image
+        source={require("../../assets/images/hatchlink-logo.png")}
+        style={styles.logo}
+        resizeMode="contain"
+      />
+      <View style={styles.buttonContainer}>
+        <Button title="Clear AsyncStorage" onPress={clearAsyncStorage} />
+      </View>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff",
+  },
+  text: {
+    fontSize: 24,
+    fontWeight: "bold",
+  },
+  logo: {
+    width: 100,
+    height: 100,
+    marginBottom: 20,
+  },
+  buttonContainer: {
+    marginTop: 20,
+    width: "80%",
+  },
+});
