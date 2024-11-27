@@ -1,3 +1,4 @@
+// app/_layout.tsx
 import React, { useEffect } from "react";
 import {
   DarkTheme,
@@ -19,16 +20,15 @@ export default function RootLayout() {
 
   // State for fonts and onboarding status
   const [fontsLoaded] = useFonts({
-    PoppinsRegular: require("../assets/fonts/Poppins-Regular.ttf"), // Weight 400
-    PoppinsMedium: require("../assets/fonts/Poppins-Medium.ttf"), // Weight 500
-    PoppinsSemiBold: require("../assets/fonts/Poppins-SemiBold.ttf"), // Weight 600
-    PoppinsBold: require("../assets/fonts/Poppins-Bold.ttf"), // Weight 700
-    PoppinsExtraBold: require("../assets/fonts/Poppins-ExtraBold.ttf"), // Weight 800
+    PoppinsRegular: require("../assets/fonts/Poppins-Regular.ttf"),
+    PoppinsMedium: require("../assets/fonts/Poppins-Medium.ttf"),
+    PoppinsSemiBold: require("../assets/fonts/Poppins-SemiBold.ttf"),
+    PoppinsBold: require("../assets/fonts/Poppins-Bold.ttf"),
+    PoppinsExtraBold: require("../assets/fonts/Poppins-ExtraBold.ttf"),
   });
 
   const hasOnboarded = useOnboardingStatus();
 
-  // Navigation logic
   useEffect(() => {
     if (!fontsLoaded || hasOnboarded === null) return;
 
@@ -38,9 +38,6 @@ export default function RootLayout() {
     if (!hasOnboarded) {
       console.log(`[${timestamp()}] [RootLayout] Navigating to '/onboarding'`);
       router.replace("/onboarding");
-    } else {
-      console.log(`[${timestamp()}] [RootLayout] Navigating to '/'`);
-      router.replace("/(tabs)/home");
     }
   }, [fontsLoaded, hasOnboarded]);
 
