@@ -1,10 +1,12 @@
-import { Image, StyleSheet, Platform } from "react-native";
-
+// client/hatchlink/app/(drawer)/(tabs)/index.tsx
+import { Image, StyleSheet } from "react-native";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 
-export default function HomeScreen() {
+export default function Home() {
+  console.log("Rendering Home Tab (index.tsx)");
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}

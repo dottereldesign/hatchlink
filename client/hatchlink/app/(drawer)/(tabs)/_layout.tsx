@@ -1,3 +1,4 @@
+// client/hatchlink/app/(drawer)/(tabs)/_layout.tsx
 import { Tabs } from "expo-router";
 import React from "react";
 import { Platform } from "react-native";
@@ -13,21 +14,18 @@ import Octicons from "@expo/vector-icons/Octicons";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome";
 
 export default function TabsLayout() {
+  console.log("Rendering Tabs Layout");
   const colorScheme = useColorScheme();
 
   return (
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
-        headerShown: false,
-        headerTitle: "",
+        headerShown: false, // Ensures no headers in the tabs
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
         tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: "absolute",
-          },
+          ios: { position: "absolute" }, // Blur effect for iOS
           default: {},
         }),
       }}
@@ -39,6 +37,10 @@ export default function TabsLayout() {
           tabBarIcon: ({ color }) => (
             <IconSymbol size={28} name="house.fill" color={color} />
           ),
+        }}
+        listeners={{
+          focus: () => console.log("Tabs: Focused on Home Tab (index)"),
+          blur: () => console.log("Tabs: Lost focus on Home Tab (index)"),
         }}
       />
       <Tabs.Screen
@@ -59,7 +61,6 @@ export default function TabsLayout() {
           ),
         }}
       />
-
       <Tabs.Screen
         name="switch"
         options={{
