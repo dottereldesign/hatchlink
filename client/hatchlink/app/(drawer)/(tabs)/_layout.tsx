@@ -12,7 +12,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import Octicons from "@expo/vector-icons/Octicons";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome";
 
-export default function TabLayout() {
+export default function TabsLayout() {
   const colorScheme = useColorScheme();
 
   return (
@@ -20,6 +20,7 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         headerShown: false,
+        headerTitle: "",
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
         tabBarStyle: Platform.select({
