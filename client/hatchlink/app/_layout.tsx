@@ -16,7 +16,7 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  console.log("Rendering Root Layout");
+  console.log("[Root Layout] Rendering Root Layout");
 
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
@@ -24,21 +24,23 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
+    console.log("[Root Layout] Fonts loaded:", loaded);
     if (loaded) {
-      console.log("Fonts Loaded");
       SplashScreen.hideAsync();
+      console.log("[Root Layout] Splash screen hidden");
     }
   }, [loaded]);
 
   if (!loaded) {
-    console.log("Fonts Not Loaded");
+    console.log("[Root Layout] Fonts not loaded yet, returning null");
     return null;
   }
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack>
-        <Stack.Screen name="(drawer)" options={{ headerShown: true }} />
+        <Stack.Screen name="(drawer)" options={{ headerShown: false }} />{" "}
+        {/* Let Drawer manage headers */}
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />

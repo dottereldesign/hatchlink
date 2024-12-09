@@ -14,7 +14,8 @@ import Octicons from "@expo/vector-icons/Octicons";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome";
 
 export default function TabsLayout() {
-  console.log("Rendering Tabs Layout");
+  console.log("[Tabs Layout] Rendering Tabs Layout");
+
   const colorScheme = useColorScheme();
 
   return (
@@ -39,8 +40,9 @@ export default function TabsLayout() {
           ),
         }}
         listeners={{
-          focus: () => console.log("Tabs: Focused on Home Tab (index)"),
-          blur: () => console.log("Tabs: Lost focus on Home Tab (index)"),
+          focus: () => console.log("[Tabs Layout] Focused on Home Tab (index)"),
+          blur: () =>
+            console.log("[Tabs Layout] Lost focus on Home Tab (index)"),
         }}
       />
       <Tabs.Screen
