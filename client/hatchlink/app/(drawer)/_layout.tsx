@@ -39,7 +39,7 @@ export default function DrawerLayout() {
           options={{
             drawerLabel: "Settings",
             title: "",
-            headerShown: false,
+            headerShown: true,
             headerLeft: () => <CustomBackButton size={24} />, // Back button for settings
             drawerItemStyle: styles.drawerItem,
             drawerIcon: ({ color }) => (
