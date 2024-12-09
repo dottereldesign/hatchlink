@@ -4,8 +4,8 @@ import { StyleSheet, ViewStyle, TouchableOpacity } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Drawer } from "expo-router/drawer";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
-import { DrawerNavigationProp } from "@react-navigation/drawer"; // Import DrawerNavigationProp
-import { useNavigation } from "@react-navigation/native";
+import { DrawerNavigationProp } from "@react-navigation/drawer";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 export default function DrawerLayout() {
   console.log("[Drawer Layout] Rendering Drawer Layout");
@@ -18,16 +18,16 @@ export default function DrawerLayout() {
           drawerType: "front",
         }}
       >
-        {/* Home - Connected to "index.tsx" in (tabs) */}
+        {/* Home - Connects to the "index.tsx" in (tabs) */}
         <Drawer.Screen
-          name="(tabs)"
+          name="(tabs)" // Use the folder name for default route
           options={{
             drawerLabel: "Home",
-            title: "Home",
+            title: "",
             headerShown: true,
-            headerLeft: () => <CustomMenuButton size={32} />, // Increase the size to 40
+            headerLeft: () => <CustomMenuButton size={32} />,
             drawerItemStyle: styles.drawerItem,
-            drawerIcon: ({ color, size }) => (
+            drawerIcon: ({ color }) => (
               <FontAwesome5 name="home" size={24} color={color} />
             ),
           }}
@@ -38,11 +38,11 @@ export default function DrawerLayout() {
           name="settings"
           options={{
             drawerLabel: "Settings",
-            title: "Settings",
-            headerShown: true,
-            headerLeft: () => <CustomMenuButton size={32} />, // Increase the size to 40
+            title: "",
+            headerShown: false,
+            headerLeft: () => <CustomBackButton size={24} />, // Back button for settings
             drawerItemStyle: styles.drawerItem,
-            drawerIcon: ({ color, size }) => (
+            drawerIcon: ({ color }) => (
               <FontAwesome5 name="cog" size={24} color={color} />
             ),
           }}
@@ -53,15 +53,27 @@ export default function DrawerLayout() {
 }
 
 const CustomMenuButton = ({ size }: { size: number }) => {
-  // Explicitly type the navigation object as DrawerNavigationProp
   const navigation = useNavigation<DrawerNavigationProp<any>>();
 
   return (
     <TouchableOpacity
       style={styles.menuButtonContainer}
-      onPress={() => navigation.openDrawer()} // Open the drawer
+      onPress={() => navigation.openDrawer()}
     >
-      <FontAwesome5 name="bars" size={size} color="#FFF" /> {/* Menu icon */}
+      <FontAwesome5 name="bars" size={size} color="#FFF" />
+    </TouchableOpacity>
+  );
+};
+
+const CustomBackButton = ({ size }: { size: number }) => {
+  const navigation = useNavigation<DrawerNavigationProp<any>>();
+
+  return (
+    <TouchableOpacity
+      style={styles.menuButtonContainer}
+      onPress={() => navigation.goBack()}
+    >
+      <FontAwesome5 name="arrow-left" size={size} color="#FFF" />
     </TouchableOpacity>
   );
 };
@@ -80,6 +92,6 @@ const styles = StyleSheet.create({
     marginVertical: 4,
   } as ViewStyle,
   menuButtonContainer: {
-    marginLeft: 16, // Adjust margin as needed
+    marginLeft: 16,
   } as ViewStyle,
 });
