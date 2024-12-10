@@ -1,3 +1,4 @@
+// client/hatchlink/app/(drawer)/(tabs)/index.tsx
 import { StyleSheet, View, Text } from "react-native";
 import React from "react";
 
