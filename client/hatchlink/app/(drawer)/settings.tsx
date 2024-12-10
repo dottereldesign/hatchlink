@@ -1,12 +1,25 @@
+// client/hatchlink/app/(drawer)/settings.tsx
 import { StyleSheet, View, Text } from "react-native";
 import React from "react";
+import { useColorScheme } from "@/hooks/useColorScheme";
+import { Colors } from "@/constants/Colors";
 
-export default function TabTwoScreen() {
+export default function SettingsScreen() {
+  const colorScheme = useColorScheme();
+  const currentColors = Colors[colorScheme ?? "light"];
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Settings</Text>
-      <Text style={styles.description}>
-        This is the Hatchlink <Text style={styles.bold}>Settings.</Text>
+    <View
+      style={[styles.container, { backgroundColor: currentColors.background }]}
+    >
+      <Text style={[styles.title, { color: currentColors.text }]}>
+        Settings
+      </Text>
+      <Text style={[styles.description, { color: currentColors.text }]}>
+        This is the Hatchlink{" "}
+        <Text style={[styles.bold, { color: currentColors.tint }]}>
+          Settings.
+        </Text>
       </Text>
     </View>
   );
@@ -23,12 +36,10 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 8,
-    color: "#fff",
   },
   description: {
     fontSize: 16,
     textAlign: "center",
-    color: "#fff",
   },
   bold: {
     fontWeight: "bold",

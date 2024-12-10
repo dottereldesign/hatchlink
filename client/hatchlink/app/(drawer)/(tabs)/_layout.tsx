@@ -12,6 +12,9 @@ import { useFonts } from "expo-font";
 import Octicons from "@expo/vector-icons/Octicons";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome";
 
+// Import the custom FeedIcon component
+import FeedIcon from "@/assets/icons/FeedIcon";
+
 export default function TabsLayout() {
   console.log("[Tabs Layout] Rendering Tabs Layout");
 
@@ -49,10 +52,11 @@ export default function TabsLayout() {
         options={{
           title: "Feed",
           tabBarIcon: ({ color }) => (
-            <FontAwesome6 name="feed" size={24} color={color} />
+            <FeedIcon width={24} height={24} stroke={color} />
           ),
         }}
       />
+
       <Tabs.Screen
         name="notices"
         options={{
