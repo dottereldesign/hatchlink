@@ -10,7 +10,13 @@ Welcome to Hatchlink, an Expo project created with create-expo-app. This project
    npm install
    ```
 
-2. Start the app
+2. Install dependencies
+
+```bash
+npx expo doctor
+```
+
+3. Start the app
 
    ```bash
     npx expo start
