@@ -5,10 +5,15 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Drawer } from "expo-router/drawer";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
+import { useColorScheme } from "@/hooks/useColorScheme";
+import { Colors } from "@/constants/Colors";
 
 export default function DrawerLayout() {
   console.log("[Drawer Layout] Rendering Drawer Layout");
+
+  const colorScheme = useColorScheme();
+  const currentColors = Colors[colorScheme ?? "light"];
 
   return (
     <GestureHandlerRootView style={styles.rootContainer}>
@@ -25,7 +30,9 @@ export default function DrawerLayout() {
             drawerLabel: "Home",
             title: "",
             headerShown: true,
-            headerLeft: () => <CustomMenuButton size={32} />,
+            headerLeft: () => (
+              <CustomMenuButton size={32} color={currentColors.text} />
+            ),
             drawerItemStyle: styles.drawerItem,
             drawerIcon: ({ color }) => (
               <FontAwesome5 name="home" size={24} color={color} />
@@ -40,7 +47,9 @@ export default function DrawerLayout() {
             drawerLabel: "Settings",
             title: "",
             headerShown: true,
-            headerLeft: () => <CustomBackButton size={24} />, // Back button for settings
+            headerLeft: () => (
+              <CustomBackButton size={24} color={currentColors.text} />
+            ), // Back button for settings
             drawerItemStyle: styles.drawerItem,
             drawerIcon: ({ color }) => (
               <FontAwesome5 name="cog" size={24} color={color} />
@@ -52,7 +61,7 @@ export default function DrawerLayout() {
   );
 }
 
-const CustomMenuButton = ({ size }: { size: number }) => {
+const CustomMenuButton = ({ size, color }: { size: number; color: string }) => {
   const navigation = useNavigation<DrawerNavigationProp<any>>();
 
   return (
@@ -60,12 +69,12 @@ const CustomMenuButton = ({ size }: { size: number }) => {
       style={styles.menuButtonContainer}
       onPress={() => navigation.openDrawer()}
     >
-      <FontAwesome5 name="bars" size={size} color="#FFF" />
+      <FontAwesome5 name="bars" size={size} color={color} />
     </TouchableOpacity>
   );
 };
 
-const CustomBackButton = ({ size }: { size: number }) => {
+const CustomBackButton = ({ size, color }: { size: number; color: string }) => {
   const navigation = useNavigation<DrawerNavigationProp<any>>();
 
   return (
@@ -73,7 +82,7 @@ const CustomBackButton = ({ size }: { size: number }) => {
       style={styles.menuButtonContainer}
       onPress={() => navigation.goBack()}
     >
-      <FontAwesome5 name="arrow-left" size={size} color="#FFF" />
+      <FontAwesome5 name="arrow-left" size={size} color={color} />
     </TouchableOpacity>
   );
 };
