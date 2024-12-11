@@ -8,12 +8,9 @@ import { IconSymbol } from "@/components/ui/IconSymbol";
 import TabBarBackground from "@/components/ui/TabBarBackground";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
-import { useFonts } from "expo-font";
-import Octicons from "@expo/vector-icons/Octicons";
-import FontAwesome6 from "@expo/vector-icons/FontAwesome";
-
-// Import the custom FeedIcon component
+import HomeIcon from "@/assets/icons/HomeIcon";
 import FeedIcon from "@/assets/icons/FeedIcon";
+import Octicons from "@expo/vector-icons/Octicons";
 
 export default function TabsLayout() {
   console.log("[Tabs Layout] Rendering Tabs Layout");
@@ -24,12 +21,27 @@ export default function TabsLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        tabBarInactiveTintColor: Colors[colorScheme ?? "light"].text,
         headerShown: false, // Ensures no headers in the tabs
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
+        tabBarLabelStyle: {
+          fontSize: 12, // Adjust the font size
+          fontWeight: "bold", // Optionally make it bold
+        },
         tabBarStyle: Platform.select({
-          ios: { position: "absolute" }, // Blur effect for iOS
-          default: {},
+          ios: {
+            position: "absolute", // Keep iOS style intact
+            height: 60, // Increase the height of the tab bar
+            paddingBottom: 10, // Add padding inside the tab bar
+          },
+          android: {
+            height: 60, // Increase the height for Android
+            paddingBottom: 10,
+          },
+          default: {
+            height: 70, // Fallback for other platforms
+          },
         }),
       }}
     >
@@ -38,7 +50,7 @@ export default function TabsLayout() {
         options={{
           title: "Home",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="house.fill" color={color} />
+            <HomeIcon width={32} height={32} stroke={color} />
           ),
         }}
         listeners={{
@@ -56,7 +68,6 @@ export default function TabsLayout() {
           ),
         }}
       />
-
       <Tabs.Screen
         name="notices"
         options={{

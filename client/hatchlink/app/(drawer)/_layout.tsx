@@ -96,8 +96,7 @@ const styles = StyleSheet.create({
   } as ViewStyle,
   drawerItem: {
     borderRadius: 4,
-    borderBottomWidth: 1,
-    borderBottomColor: "#3d444d",
+
     marginVertical: 4,
   } as ViewStyle,
   menuButtonContainer: {
